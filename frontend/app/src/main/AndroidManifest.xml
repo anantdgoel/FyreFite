@@ -24,8 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
         <activity android:name=".MakeActivity" />
         <activity android:name=".JoinActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
