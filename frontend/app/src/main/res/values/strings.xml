@@ -13,14 +13,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-<<<<<<< HEAD
     <string name="start_a_game">Start a Game</string>
     <string name="join_a_game">Join A Game</string>
-=======
+    =======
     <string name="sign_in">Sign In</string>
     <string name="register">Register</string>
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
->>>>>>> 4389fc55ed5ebd2276f2a93f7a5d229176eb873a
+    <string name="title_activity_maps">Map</string>
+    >>>>>>> 4389fc55ed5ebd2276f2a93f7a5d229176eb873a
 </resources>
