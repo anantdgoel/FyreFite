@@ -31,7 +31,7 @@
     console.log("BEFORE")
     var settings = {
       "async": true,
-      "json": "callback",
+      // "json": "callback",
       "dataType": "json",
       "crossDomain": true,
       "url": "http://fyrefite.com/api/getgames/",
@@ -70,8 +70,8 @@
         $.ajax(settings).done(function (response) {
           // console.log(response[0].lat);
           for(var key in response){
-            console.log("AA")
-            console.log(response.get(key));
+            console.log("AAAAAAA")
+            console.log(response);
             console.log("BBBB")
 
             // Add the circle for this city to the map.
