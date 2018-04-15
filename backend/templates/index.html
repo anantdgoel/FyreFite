@@ -31,8 +31,8 @@
     console.log("BEFORE")
     var settings = {
       "async": true,
-      "jsonp": "callback",
-      "dataType": "jsonp",
+      "json": "callback",
+      "dataType": "json",
       "crossDomain": true,
       "url": "http://fyrefite.com/api/getgames/",
       "method": "GET",
@@ -64,22 +64,11 @@
         circles.length = 0;
       }
 
-      // var invocation = new XMLHttpRequest();
-      // var url = 'http://fyrefite.com/api/getgames';
-
-      function callOtherDomain() {
-        if(invocation) {
-          invocation.open('GET', url, true);
-          invocation.onreadystatechange = handler;
-          invocation.send();
-        }
-      }
-
       setInterval(() => {
         clearOverlays();
 
         $.ajax(settings).done(function (response) {
-          console.log(response[0].lat);
+          // console.log(response[0].lat);
           for(var key in response){
             console.log("AA")
             console.log(response.get(key));
