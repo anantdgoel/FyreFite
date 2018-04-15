@@ -28,7 +28,7 @@ public class MakeActivity extends AppCompatActivity {
     String gameID;
     String gameName;
     String gamePassword;
-    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("https://hackdartmo.firebaseio.com");
+    DatabaseReference ref = FirebaseDatabase.getInstance("https://hackdartmo.firebaseio.com").getReference();
     GeoFire geoFire = new GeoFire(ref);
 
     @Override
