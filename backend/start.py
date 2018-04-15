@@ -32,7 +32,7 @@ def bye():
 @app.route("/api/newgame/", methods=['POST'])
 def create_game():
 	uid = str(uuid.uuid4())
-	data = {'uid':uid, 'lat':request.args.get('lat'), 'long':request.args.get('long'), 'r':request.args.get('radius')}
+	data = {'uid':uid, 'lat':request.args.get('lat'), 'long':request.args.get('long'), 'r':request.args.get('radius'), 'name':request.args.get('name', 'admin':request.args.get('admin_uid'))}
 	db.child("games").child(uid).set(data)
 	resp_obj = {'uid':uid}
 	return jsonify(resp_obj)
