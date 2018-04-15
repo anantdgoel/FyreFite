@@ -6,21 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class VictoryActivity extends AppCompatActivity {
+public class DeathActivity extends AppCompatActivity {
 
-    Button mMenu;
+    Button main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_victory);
+        setContentView(R.layout.activity_death);
 
-        mMenu = findViewById(R.id.button_main);
+        main = findViewById(R.id.button_main);
 
-        mMenu.setOnClickListener(new View.OnClickListener() {
+        main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VictoryActivity.this, MainActivity.class);
+                Intent intent = new Intent(DeathActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

@@ -97,4 +97,11 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="more_menu">More Menu</string>
+    <string name="give_up">Give Up</string>
+    <string name="incapacitated">INCAPACITATED</string>
+    <string name="use_a_first_aid">Use a First Aid</string>
+    <string name="you_died">YOU DIED</string>
+    <string name="back_to_main_menu">Back to Main Menu</string>
+    <string name="victory">VICTORY</string>
+    <string name="back_to_main_menu">Back to Main Menu</string>
 </resources>

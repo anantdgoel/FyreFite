@@ -4,24 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VictoryActivity">
+    tools:context=".DeathActivity">
 
     <TextView
-        android:id="@+id/victory"
+        android:id="@+id/death"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="142dp"
+        android:layout_marginTop="129dp"
+        android:text="@string/you_died"
         android:textSize="50sp"
-        android:text="@string/victory" />
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="117dp" />
 
     <Button
         android:id="@+id/button_main"
-        android:layout_width="193dp"
+        android:layout_width="178dp"
         android:layout_height="62dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="142dp"
-        android:text="@string/back_to_main_menu" />
+        android:layout_marginBottom="187dp"
+        android:text="@string/back_to_main_menu"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="322dp" />
 </RelativeLayout>
