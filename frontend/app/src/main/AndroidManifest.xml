@@ -53,7 +53,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".GameRoom"></activity>
+        <activity android:name=".GameRoom"/>
+        <activity android:name=".VictoryActivity"/>
     </application>
 
 </manifest>
