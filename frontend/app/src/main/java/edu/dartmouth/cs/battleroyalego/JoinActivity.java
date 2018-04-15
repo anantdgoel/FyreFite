@@ -12,7 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -25,7 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -34,6 +40,7 @@ public class JoinActivity extends AppCompatActivity {
     DatabaseReference ref = FirebaseDatabase.getInstance("https://hackdartmo.firebaseio.com").getReference();
     GeoFire geoFire = new GeoFire(ref);
     List<String> nearestGames = Arrays.asList(new String[5]);
+    String gameID;
 
 
     @Override
@@ -41,7 +48,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         user_location = getIntent().getParcelableExtra("USER_LOCATION");
-        String userUID = getIntent().getStringExtra("USER_UID");
+        final String userUID = getIntent().getStringExtra("USER_UID");
         user_location_lat = user_location.getLatitude();
         user_location_long = user_location.getLongitude();
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(user_location_lat, user_location_long), 1);
@@ -51,8 +58,6 @@ public class JoinActivity extends AppCompatActivity {
         final Button game4 = findViewById(R.id.game4);
         final Button game5 = findViewById(R.id.game5);
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.game_url) + "/newgame";
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             int i = 0;
@@ -90,12 +95,15 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+
         game1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(JoinActivity.this, GameRoom.class);
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_NAME", game1.getText());
+                gameID = game1.getText().toString();
                 startActivity(intent);
             }
         });
@@ -106,6 +114,7 @@ public class JoinActivity extends AppCompatActivity {
                 Intent intent = new Intent(JoinActivity.this, GameRoom.class);
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_NAME", game2.getText());
+                gameID = game2.getText().toString();
                 startActivity(intent);
             }
         });
@@ -116,6 +125,7 @@ public class JoinActivity extends AppCompatActivity {
                 Intent intent = new Intent(JoinActivity.this, GameRoom.class);
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_NAME", game3.getText());
+                gameID = game3.getText().toString();
                 startActivity(intent);
             }
         });
@@ -126,6 +136,7 @@ public class JoinActivity extends AppCompatActivity {
                 Intent intent = new Intent(JoinActivity.this, GameRoom.class);
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_NAME", game4.getText());
+                gameID = game4.getText().toString();
                 startActivity(intent);
             }
         });
@@ -136,9 +147,34 @@ public class JoinActivity extends AppCompatActivity {
                 Intent intent = new Intent(JoinActivity.this, GameRoom.class);
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_NAME", game5.getText());
+                gameID = game5.getText().toString();
                 startActivity(intent);
             }
         });
+
+        String url = getString(R.string.game_url) + "/" + gameID + "/join/" + userUID;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // what to do on response
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("user_location_lat", Double.toString(user_location_lat));
+                params.put("user_location_long", Double.toString(user_location_long));
+                return params;
+            }
+        });
+
+        queue.add(postRequest);
 
     }
 }
