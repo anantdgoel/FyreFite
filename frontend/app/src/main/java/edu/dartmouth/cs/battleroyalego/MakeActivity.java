@@ -53,7 +53,7 @@ public class MakeActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.game_url) + "/newgame";
+        String url = getString(R.string.game_url) + "/newgame/";
         JSONObject params = new JSONObject();
 
         try {
