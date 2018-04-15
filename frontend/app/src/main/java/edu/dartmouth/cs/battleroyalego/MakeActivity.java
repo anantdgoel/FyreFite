@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -86,7 +87,12 @@ public class MakeActivity extends AppCompatActivity {
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_LOCATION", user_location);
                 intent.putExtra("GAME_ID", gameID);
-                geoFire.setLocation("GAME_"+gameID, new GeoLocation(user_location.getLatitude(), user_location.getLongitude()));
+                geoFire.setLocation("GAME_"+gameID, new GeoLocation(user_location.getLatitude(), user_location.getLongitude()), new GeoFire.CompletionListener() {
+                    @Override
+                    public void onComplete(String key, DatabaseError error) {
+
+                    }
+                });
                 startActivity(intent);
             }
         });
