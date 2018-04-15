@@ -87,7 +87,7 @@ public class MakeActivity extends AppCompatActivity {
                 intent.putExtra("USER_LOCATION", user_location);
                 intent.putExtra("GAME_LOCATION", user_location);
                 intent.putExtra("GAME_ID", gameID);
-                geoFire.setLocation("GAME_"+gameID, new GeoLocation(user_location.getLatitude(), user_location.getLongitude()), new GeoFire.CompletionListener() {
+                geoFire.setLocation(gameName, new GeoLocation(user_location.getLatitude(), user_location.getLongitude()), new GeoFire.CompletionListener() {
                     @Override
                     public void onComplete(String key, DatabaseError error) {
 

@@ -39,22 +39,17 @@ public class JoinActivity extends AppCompatActivity {
         user_location_lat = user_location.getLatitude();
         user_location_long = user_location.getLongitude();
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(user_location_lat, user_location_long), 1);
-        Button game1 = findViewById(R.id.game1);
-        Button game2 = findViewById(R.id.game2);
-        Button game3 = findViewById(R.id.game3);
-        Button game4 = findViewById(R.id.game4);
-        Button game5 = findViewById(R.id.game5);
-
-        game1.setText(nearestGames.get(0));
-        game2.setText(nearestGames.get(1));
-        game3.setText(nearestGames.get(2));
-        game4.setText(nearestGames.get(3));
-        game5.setText(nearestGames.get(4));
+        final Button game1 = findViewById(R.id.game1);
+        final Button game2 = findViewById(R.id.game2);
+        final Button game3 = findViewById(R.id.game3);
+        final Button game4 = findViewById(R.id.game4);
+        final Button game5 = findViewById(R.id.game5);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             int i = 0;
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
+                System.out.println("found a game!");
                 if (i < 5) {
                     nearestGames.set(i, key);
                     i++;
@@ -73,7 +68,11 @@ public class JoinActivity extends AppCompatActivity {
 
             @Override
             public void onGeoQueryReady() {
-
+                game1.setText(nearestGames.get(0));
+                game2.setText(nearestGames.get(1));
+                game3.setText(nearestGames.get(2));
+                game4.setText(nearestGames.get(3));
+                game5.setText(nearestGames.get(4));
             }
 
             @Override
@@ -81,8 +80,6 @@ public class JoinActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 }
