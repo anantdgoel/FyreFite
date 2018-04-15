@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".BleedOutActivity">
 
+    <ImageView
+        android:layout_width="300px"
+        android:layout_height="300px"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/ic_transfusion"
+        android:id="@+id/blood_image" />
+
     <Button
         android:id="@+id/button_give"
         android:layout_width="167dp"
@@ -18,12 +28,13 @@
         tools:layout_editor_absoluteY="368dp" />
 
     <TextView
+        android:layout_below="@+id/blood_image"
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="212dp"
         android:textSize="24sp"
         android:text="@string/incapacitated" />
 

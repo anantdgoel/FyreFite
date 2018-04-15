@@ -6,15 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".VictoryActivity">
 
+
+    <ImageView
+        android:layout_width="300px"
+        android:layout_height="300px"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/ic_victory"
+        android:id="@+id/victory_image" />
+
     <TextView
         android:id="@+id/victory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="142dp"
-        android:textSize="50sp"
-        android:text="@string/victory" />
+        android:layout_alignStart="@+id/button_main"
+        android:layout_below="@+id/victory_image"
+        android:layout_marginTop="21dp"
+        android:text="@string/victory"
+        android:textSize="50sp" />
 
     <Button
         android:id="@+id/button_main"
