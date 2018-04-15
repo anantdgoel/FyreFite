@@ -23,7 +23,7 @@ public class JoinActivity extends AppCompatActivity {
     Location user_location;
     double user_location_lat = user_location.getLatitude();
     double user_location_long = user_location.getLongitude();
-    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("https://hackdartmo.firebaseio.com");
+    DatabaseReference ref = FirebaseDatabase.getInstance("https://hackdartmo.firebaseio.com").getReference();
     GeoFire geoFire = new GeoFire(ref);
     List<String> nearestGames = Arrays.asList(new String[5]);
 
