@@ -9,12 +9,14 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean justStart = true;
     boolean isDead = false;
 
+    Circle circle;
+
+    Handler mHandler;
+
     Button firstAid, bandage, fire, weapon;
     TextView countdown, playerCount, health;
 
@@ -59,26 +65,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
 
-//        if(justStart){
-//            healthPoints = 100;
-//            ammo = 30;
-//            secondsLeft = 120;
-//            nPlayers = 20;
-//            nFirstAids = 1;
-//            nBandages = 1;
-//            justStart = false;
-//        }
-//
-//        //check
-//        checkVictoryAndDeath();
-//
-//        firstAid = findViewById(R.id.first_aid);
-//        bandage = findViewById(R.id.bandage);
-//        fire = findViewById(R.id.fire);
-//        weapon = findViewById(R.id.weapon);
-//        countdown = findViewById(R.id.countdown);
-//        playerCount = findViewById(R.id.player_count);
-//        health = findViewById(R.id.health);
+        if(justStart){
+            healthPoints = 100;
+            ammo = 30;
+            secondsLeft = 120;
+            nPlayers = 2;
+            nFirstAids = 1;
+            nBandages = 1;
+            justStart = false;
+        }
+
+        //check
+        checkVictoryAndDeath();
+
+        firstAid = findViewById(R.id.first_aid);
+        bandage = findViewById(R.id.bandage);
+        fire = findViewById(R.id.fire);
+        weapon = findViewById(R.id.weapon);
+        countdown = findViewById(R.id.countdown);
+        playerCount = findViewById(R.id.player_count);
+        health = findViewById(R.id.health);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -86,13 +92,73 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mHandler = new Handler();
+
+        fire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(fireWeapon()){
+                    weapon.setText("PISTOL: " + ammo + " ROUNDS");
+                }
+            }
+        });
+
+        firstAid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                useFirstAid();
+            }
+        });
+
+        bandage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                useBandage();
+            }
+        });
+
+        weapon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ammo < 20){
+                    Intent intent = new Intent(MapsActivity.this, VictoryActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                circle.setRadius(circle.getRadius()*0.9999); //this function can change value of mInterval.
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler.postDelayed(mStatusChecker, 60000);
+            }
+        }
+    };
+
+    void startShrinking() {
+        mStatusChecker.run();
+    }
+
+    void stopShrinking() {
+        mHandler.removeCallbacks(mStatusChecker);
     }
 
     //calculate health after being shot at, isDead is true if person is <= 0
     public void shot(int dmg){
         healthPoints = healthPoints - dmg;
+        Toast.makeText(getApplicationContext(), "You have been shot! -" + dmg + " health", Toast.LENGTH_LONG).show();
         if(healthPoints <= 0){
             isDead = true;
+            Intent intent = new Intent(MapsActivity.this, DeathActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -108,6 +174,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             healthPoints = 100;
             return true;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopShrinking();
     }
 
     //use bandage, return true if it worked and restored health by 10
@@ -206,10 +278,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         /* Draw the arena boundaries */
-        LatLng gameCenter = new LatLng(43.7, -72.3);
-        final Circle circle = mMap.addCircle(new CircleOptions()
+        LatLng gameCenter = new LatLng(43.704553, -72.294674);
+        circle = mMap.addCircle(new CircleOptions()
                 .center(gameCenter)
-                .radius(1000)
+                .radius(5000)
                 .strokeColor(Color.RED)
                 .fillColor(0x00000000));
 
@@ -226,6 +298,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         Timer.start();
+        startShrinking();
 
 
 //        // Add a marker in Sydney and move the camera

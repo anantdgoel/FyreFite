@@ -48,15 +48,6 @@ public class MainActivity extends AppCompatActivity {
         mLocationRequest.setFastestInterval(120000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-        Button shortcut = findViewById(R.id.button);
-
-        shortcut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
-                startActivity(intent);
-            }
-        });
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -83,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button startGame = findViewById(R.id.start_game);
         Button joinGame = findViewById(R.id.join_game);
-        Button testGame = findViewById(R.id.test_game);
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,13 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, JoinActivity.class);
                 intent.putExtra("USER_LOCATION", user_game_location);
                 intent.putExtra("USER_UID", userUID);
-                startActivity(intent);
-            }
-        });
-        testGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
         });

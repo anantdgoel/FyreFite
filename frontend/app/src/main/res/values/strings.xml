@@ -109,8 +109,8 @@
     <string name="facebook_application_id" translatable="false">353305938511712</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb353305938511712</string>
     <string name="health">Health: 100/100</string>
-    <string name="start_time">2:00</string>
-    <string name="player_count">20 Left</string>
+    <string name="start_time">1:36</string>
+    <string name="player_count">2 Left</string>
     <string name="first_aid">First Aid</string>
     <string name="armor">Armor</string>
     <string name="fire">Fire</string>
