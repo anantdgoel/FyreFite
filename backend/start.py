@@ -1,4 +1,5 @@
 from flask import Flask, request, abort, jsonify, render_template
+from flask_cors import CORS
 import pyrebase
 
 from game import Game
@@ -17,6 +18,7 @@ db = firebase.database()
 
 #initiaize flask
 app = Flask(__name__)
+CORS(app)
 
 # a route where we will display a welcome message via an HTML template
 @app.route("/")
