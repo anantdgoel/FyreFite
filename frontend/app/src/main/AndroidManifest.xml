@@ -53,9 +53,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+<<<<<<< HEAD
         <activity android:name=".VictoryActivity" />
         <activity android:name=".BleedOutActivity" />
         <activity android:name=".DeathActivity"></activity>
+=======
+        <activity android:name=".GameRoom"/>
+        <activity android:name=".VictoryActivity"/>
+>>>>>>> ad58e8d514c082849dee9067d4080ce789610515
     </application>
 
 </manifest>
