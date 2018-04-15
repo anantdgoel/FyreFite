@@ -22,7 +22,7 @@ public class BleedOutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bleed_out);
 
 
-        v = (ImageView) findViewById(R.id.blood_image);
+        v = findViewById(R.id.blood_image);
         animation = AnimationUtils.loadAnimation(this,R.anim.animation);
         v.setAnimation(animation);
 
