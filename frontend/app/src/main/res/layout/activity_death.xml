@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".DeathActivity">
 
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:background="@drawable/ic_risk_skull"
+        android:id="@+id/skull_image" />
+
     <TextView
+        android:layout_below="@+id/skull_image"
         android:id="@+id/death"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="129dp"
+        android:layout_marginTop="179dp"
         android:text="@string/you_died"
         android:textSize="50sp"
         tools:layout_editor_absoluteX="163dp"
