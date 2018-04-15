@@ -43,7 +43,7 @@ def create_game():
 # def drop_player(gameid):
 # 	game = games[gameid] 
 
-@app.route("/api/getgames", methods=['GET'])
+@app.route("/api/getgames/", methods=['GET'])
 def get_games():
 	games = db.child("games").get()
 	data = {}
