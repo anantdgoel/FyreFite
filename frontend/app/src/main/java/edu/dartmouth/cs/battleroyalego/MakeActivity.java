@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.geofire.GeoFire;
@@ -19,6 +20,9 @@ import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,32 +54,36 @@ public class MakeActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = getString(R.string.game_url) + "/newgame";
+        JSONObject params = new JSONObject();
 
-// Request a string response from the provided URL.
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // what to do on response
-                        gameID = response;
-                    }
-                }, new Response.ErrorListener() {
+        try {
+            params.put("lat", user_location_lat);
+            params.put("long", user_location_long);
+            params.put("radius", "5000"); // probably should use user input
+            params.put("name", gameName);
+            params.put("game_pwd", gamePassword);
+            params.put("admin_uid", userUID);
+            params.put("Content-Type", "application/json");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        // Request a JSON response from the provided URL.
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response){
+                gameID = null;
+                try {
+                    gameID = response.getString("uid");
+                    System.out.println(response.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-            }
-
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("game_lat", user_location_lat);
-                params.put("game_long", user_location_long);
-                params.put("game_name", gameName);
-                params.put("game_pwd", gamePassword);
-                params.put("admin_uid", userUID);
-                params.put("Content-Type", "application/json");
-
-                return params;
             }
         });
 
@@ -90,6 +98,7 @@ public class MakeActivity extends AppCompatActivity {
                 intent.putExtra("GAME_LOCATION", user_location);
                 intent.putExtra("GAME_ID", gameID);
                 intent.putExtra("GAME_NAME", gameNameField.getText().toString());
+                System.out.println(gameID);
                 geoFire.setLocation(gameID, new GeoLocation(user_location.getLatitude(), user_location.getLongitude()), new GeoFire.CompletionListener() {
                     @Override
                     public void onComplete(String key, DatabaseError error) {
