@@ -33,8 +33,9 @@ dependencies {
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.google.firebase:firebase-core:15.0.0'
     implementation 'com.google.firebase:firebase-database:15.0.0'
-    compile 'com.google.firebase:firebase-auth:15.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.27.0'
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.27.0'
+    implementation 'com.firebaseui:firebase-ui-auth:3.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
