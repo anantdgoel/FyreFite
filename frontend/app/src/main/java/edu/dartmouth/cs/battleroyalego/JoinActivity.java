@@ -2,12 +2,14 @@ package edu.dartmouth.cs.battleroyalego;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import com.firebase.geofire.GeoFire;
@@ -30,6 +32,7 @@ public class JoinActivity extends AppCompatActivity {
     DatabaseReference ref = FirebaseDatabase.getInstance("https://hackdartmo.firebaseio.com").getReference();
     GeoFire geoFire = new GeoFire(ref);
     List<String> nearestGames = Arrays.asList(new String[5]);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,56 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onGeoQueryError(DatabaseError error) {
 
+            }
+        });
+
+        game1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JoinActivity.this, GameRoom.class);
+                intent.putExtra("USER_LOCATION", user_location);
+                intent.putExtra("GAME_NAME", game1.getText());
+                startActivity(intent);
+            }
+        });
+
+        game2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JoinActivity.this, GameRoom.class);
+                intent.putExtra("USER_LOCATION", user_location);
+                intent.putExtra("GAME_NAME", game2.getText());
+                startActivity(intent);
+            }
+        });
+
+        game3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JoinActivity.this, GameRoom.class);
+                intent.putExtra("USER_LOCATION", user_location);
+                intent.putExtra("GAME_NAME", game3.getText());
+                startActivity(intent);
+            }
+        });
+
+        game4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JoinActivity.this, GameRoom.class);
+                intent.putExtra("USER_LOCATION", user_location);
+                intent.putExtra("GAME_NAME", game4.getText());
+                startActivity(intent);
+            }
+        });
+
+        game5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JoinActivity.this, GameRoom.class);
+                intent.putExtra("USER_LOCATION", user_location);
+                intent.putExtra("GAME_NAME", game5.getText());
+                startActivity(intent);
             }
         });
 
