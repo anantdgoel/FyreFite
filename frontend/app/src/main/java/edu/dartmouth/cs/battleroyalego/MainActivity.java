@@ -31,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationClient;
     Location user_game_location;
 
+    FirebaseUser currentUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FirebaseUser currentUser = (FirebaseUser) getIntent().getParcelableExtra("firebaseUser");
-        final String userUID = currentUser.getUid();
+ 
+        final String userUID = getIntent().getStringExtra("firebaseUser");
+        System.out.println("userUID is: " +userUID);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mLocationRequest = new LocationRequest();
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
