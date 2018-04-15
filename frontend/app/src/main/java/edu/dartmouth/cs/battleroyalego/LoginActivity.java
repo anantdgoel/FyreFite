@@ -3,7 +3,10 @@ package edu.dartmouth.cs.battleroyalego;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +31,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,15 +66,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        pref = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -82,11 +90,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        //TODO: remove
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("Sign", true);
+        editor.apply();
+
+        if(pref.getBoolean("Sign", false)){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+
+                SharedPreferences.Editor editor = pref.edit();
+
+                if(mEmailView.getText().toString().isEmpty() || mPasswordView.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Incorrect Email/Password", Toast.LENGTH_LONG).show();
+                }else if(mEmailView.getText().toString().equals(pref.getString("Email", "")) && mPasswordView.getText().toString().equals(pref.getString("Password", ""))){
+                    attemptLogin();
+                    editor.putBoolean("Sign", true);
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Incorrect Email/Password", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        Button mRegisterButton = findViewById(R.id.register);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
 
