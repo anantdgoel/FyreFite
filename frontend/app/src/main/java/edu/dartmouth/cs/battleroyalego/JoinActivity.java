@@ -1,6 +1,11 @@
 package edu.dartmouth.cs.battleroyalego;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -21,8 +26,7 @@ import java.util.List;
 public class JoinActivity extends AppCompatActivity {
 
     Location user_location;
-    double user_location_lat = user_location.getLatitude();
-    double user_location_long = user_location.getLongitude();
+    double user_location_lat, user_location_long;
     DatabaseReference ref = FirebaseDatabase.getInstance("https://hackdartmo.firebaseio.com").getReference();
     GeoFire geoFire = new GeoFire(ref);
     List<String> nearestGames = Arrays.asList(new String[5]);
@@ -31,8 +35,9 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
-
         user_location = getIntent().getParcelableExtra("USER_LOCATION");
+        user_location_lat = user_location.getLatitude();
+        user_location_long = user_location.getLongitude();
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(user_location_lat, user_location_long), 1);
         Button game1 = findViewById(R.id.game1);
         Button game2 = findViewById(R.id.game2);
