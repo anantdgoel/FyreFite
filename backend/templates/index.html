@@ -16,10 +16,13 @@
         margin: 0;
         padding: 0;
       }
+
     </style>
   </head>
   <body>
+
     <div id="map"></div>
+    <h1>Hello</h1>
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -60,7 +63,6 @@
         clearOverlays();
 
         $.ajax(settings).done(function (response) {
-          console.log(response);
           for(var key in response){
             // Add the circle for this city to the map.
             var cityCircle = new google.maps.Circle({
@@ -75,13 +77,25 @@
             });
             circles.push(cityCircle);
 
+            var infowindow = new google.maps.InfoWindow({
+              position: {lat: response[key].lat, lng: response[key].long},
+              content: "hellooooo",
+            });
+            circles.push(infowindow);
+
             //add markers
             var marker = new google.maps.Marker({
               position: {lat: response[key].lat, lng: response[key].long},
               map: map,
               title: 'Hello World!'
             });
+
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+
             circles.push(marker);
+
 
             //add players
             var players = response[key].players;
