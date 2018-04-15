@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseUser currentUser = getIntent().getParcelableExtra("firebaseUser");
+        FirebaseUser currentUser = (FirebaseUser) getIntent().getParcelableExtra("firebaseUser");
         final String userUID = currentUser.getUid();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
