@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -39,6 +41,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         user_location = getIntent().getParcelableExtra("USER_LOCATION");
+        String userUID = getIntent().getStringExtra("USER_UID");
         user_location_lat = user_location.getLatitude();
         user_location_long = user_location.getLongitude();
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(user_location_lat, user_location_long), 1);
@@ -47,6 +50,9 @@ public class JoinActivity extends AppCompatActivity {
         final Button game3 = findViewById(R.id.game3);
         final Button game4 = findViewById(R.id.game4);
         final Button game5 = findViewById(R.id.game5);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = getString(R.string.game_url) + "/newgame";
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             int i = 0;

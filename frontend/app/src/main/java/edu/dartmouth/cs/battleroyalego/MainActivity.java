@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseUser currentUser = getIntent().getParcelableExtra("firebaseUser");
+        final String userUID = currentUser.getUid();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mLocationRequest = new LocationRequest();
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MakeActivity.class);
                 intent.putExtra("USER_LOCATION", user_game_location);
                 intent.putExtra("GAME_LOCATION", user_game_location);
+                intent.putExtra("USER_UID", userUID);
                 startActivity(intent);
             }
         });
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, JoinActivity.class);
                 intent.putExtra("USER_LOCATION", user_game_location);
+                intent.putExtra("USER_UID", userUID);
                 startActivity(intent);
             }
         });

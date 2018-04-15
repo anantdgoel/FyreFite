@@ -43,12 +43,13 @@ public class MakeActivity extends AppCompatActivity {
         final EditText gamePasswordField = findViewById(R.id.password);
         gamePassword = gamePasswordField.getText().toString();
         user_location = getIntent().getParcelableExtra("USER_LOCATION");
+        final String userUID = getIntent().getStringExtra("USER_UID");
         final String user_location_lat = Double.toString(user_location.getLatitude());
         final String user_location_long = Double.toString(user_location.getLongitude());
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://domain_name/api/newgame";
+        String url = getString(R.string.game_url) + "/newgame";
 
 // Request a string response from the provided URL.
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -71,6 +72,7 @@ public class MakeActivity extends AppCompatActivity {
                 params.put("game_long", user_location_long);
                 params.put("game_name", gameName);
                 params.put("game_pwd", gamePassword);
+                params.put("admin_uid", userUID);
                 params.put("Content-Type", "application/json");
 
                 return params;
