@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
- 
+
         final String userUID = getIntent().getStringExtra("firebaseUser");
         System.out.println("userUID is: " +userUID);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);

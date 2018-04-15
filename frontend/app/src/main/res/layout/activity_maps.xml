@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity" />
+    android:layout_width="match_parent">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:layout_marginTop="50sp"
+        tools:context=".MapsActivity" />
+
+    <TextView
+        android:id="@+id/health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="465sp"
+        android:text="@string/health"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:text="@string/start_time"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/player_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300sp"
+        android:layout_marginTop="5sp"
+        android:text="@string/player_count"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/first_aid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75sp"
+        android:text="@string/first_aid" />
+
+    <Button
+        android:id="@+id/fire"
+        android:layout_width="250sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="3sp"
+        android:layout_marginTop="400sp"
+        android:text="@string/fire" />
+
+    <Button
+        android:id="@+id/bandage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200sp"
+        android:text="@string/bandage" />
+
+    <Button
+        android:id="@+id/weapon"
+        android:layout_width="180sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200sp"
+        android:layout_marginTop="455sp"
+        android:text="@string/weapon" />
+
+</FrameLayout>

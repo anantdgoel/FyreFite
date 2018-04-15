@@ -14,6 +14,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,10 +44,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
 
+    boolean justStart = true;
+    boolean isDead = false;
+
+    Button firstAid, bandage, fire, weapon;
+    TextView countdown, playerCount, health;
+
+    int healthPoints, ammo, secondsLeft, nPlayers, nFirstAids, nBandages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        if(justStart){
+            healthPoints = 100;
+            ammo = 30;
+            secondsLeft = 120;
+            nPlayers = 20;
+            nFirstAids = 1;
+            nBandages = 1;
+            justStart = false;
+        }
+
+        firstAid = findViewById(R.id.first_aid);
+        bandage = findViewById(R.id.bandage);
+        fire = findViewById(R.id.fire);
+        weapon = findViewById(R.id.weapon);
+        countdown = findViewById(R.id.countdown);
+        playerCount = findViewById(R.id.player_count);
+        health = findViewById(R.id.health);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -53,6 +81,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    //calculate health after being shot at, isDead is true if person is <= 0
+    public void shot(int dmg){
+        healthPoints = healthPoints - dmg;
+        if(healthPoints <= 0){
+            isDead = true;
+        }
+    }
+
+
+    //use first aid, return true if it worked and fully restored health
+    public boolean useFirstAid(){
+        nFirstAids--;
+        if(nFirstAids < 0){
+            Toast.makeText(getApplicationContext(), "No first aid left!", Toast.LENGTH_LONG).show();
+            nFirstAids = 0;
+            return false;
+        }else{
+            healthPoints = 100;
+            return true;
+        }
+    }
+
+    //use bandage, return true if it worked and restored health by 10
+    public boolean useBandage(){
+        nBandages--;
+        if(nBandages < 0){
+            Toast.makeText(getApplicationContext(), "No bandage left!", Toast.LENGTH_LONG).show();
+            nBandages = 0;
+            return false;
+        }else{
+            healthPoints += 10;
+            if(healthPoints > 100){
+                healthPoints = 100;
+            }
+            return true;
+        }
+    }
+
+    //convert secondsLeft to 00:00
+    public String convertToTime(int seconds){
+        if(seconds < 0){
+            Toast.makeText(getApplicationContext(), "Safe zone starts to shrink!", Toast.LENGTH_LONG).show();
+            return null;
+        }else if(seconds == 0){
+            return "0:00";
+        }else{
+            int firstDigit = (int)Math.floor((double)seconds/60);
+            int secondDigits = (int)((double)seconds%60);
+            return firstDigit + ":" + secondDigits;
+        }
+    }
+
+
+    //fire the user's weapon, return false if ammo is depleted
+    public boolean fireWeapon(){
+        ammo--;
+        if(ammo < 0){
+            Toast.makeText(getApplicationContext(), "No ammo left!", Toast.LENGTH_LONG).show();
+            ammo = 0;
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
