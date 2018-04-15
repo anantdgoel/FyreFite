@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name="edu.dartmouth.cs.battleroyalego.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MakeActivity" />
-        <activity android:name=".JoinActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name="edu.dartmouth.cs.battleroyalego.MainActivity" />
+        <activity android:name="edu.dartmouth.cs.battleroyalego.MakeActivity" />
+        <activity android:name="edu.dartmouth.cs.battleroyalego.JoinActivity" />
+        <activity android:name="edu.dartmouth.cs.battleroyalego.RegisterActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -48,10 +48,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="edu.dartmouth.cs.battleroyalego.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="edu.dartmouth.cs.battleroyalego.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".VictoryActivity" />
         <activity android:name=".BleedOutActivity" />

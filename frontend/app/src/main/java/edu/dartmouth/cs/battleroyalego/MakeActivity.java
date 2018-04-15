@@ -5,10 +5,8 @@ import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.autofill.AutofillValue;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
