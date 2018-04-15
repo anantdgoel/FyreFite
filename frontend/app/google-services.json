@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "15376154908",
+    "firebase_url": "https://hackdartmo.firebaseio.com",
+    "project_id": "hackdartmo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15376154908:android:25874d0b7c3d2b6b",
+        "android_client_info": {
+          "package_name": "edu.dartmouth.cs.battleroyalego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15376154908-ogphqbvgh2k6aos78cjbsd0fm0hqmllp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfCECz2LV-yZ3I5_x3podb6tsq1_3S1pY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
