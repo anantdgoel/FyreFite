@@ -21,9 +21,9 @@ app = Flask(__name__)
 CORS(app)
 
 # a route where we will display a welcome message via an HTML template
-# @app.route("/")
-# def hello():
-# 	return render_template('index.html', message="hello")
+@app.route("/")
+def hello():
+	return render_template('index.html', message="hello")
 
 @app.route("/bye")
 def bye():
