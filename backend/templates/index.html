@@ -22,7 +22,6 @@
   <body>
 
     <div id="map"></div>
-    <h1>Hello</h1>
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -70,9 +69,7 @@
         $.ajax(settings).done(function (response) {
           // console.log(response[0].lat);
           for(var key in response){
-            console.log("AAAAAAA")
             console.log(response);
-            console.log("BBBB")
 
             // Add the circle for this city to the map.
             var cityCircle = new google.maps.Circle({
