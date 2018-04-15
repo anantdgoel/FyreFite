@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -30,7 +31,9 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
+
+import java.util.Timer;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -66,6 +69,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        int gameTime = 60*60*1000;
+        int circleDecreaseInterval = 10*1000;
+
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
@@ -74,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationRequest.setInterval(120000); // two minute interval
         mLocationRequest.setFastestInterval(120000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
+//
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -83,13 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Location Permission already granted
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                 mMap.setMyLocationEnabled(true);
-                Task<Location> userLocationTask = mFusedLocationClient.getLastLocation();
-                Location userLocation = userLocationTask.getResult();
-                Circle circle = mMap.addCircle(new CircleOptions()
-                    .center(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()))
-                    .radius(1000)
-                    .strokeColor(Color.RED)
-                    .fillColor(0x00000000));
             } else {
                 //Request Location Permission
                 checkLocationPermission();
@@ -98,14 +97,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             mMap.setMyLocationEnabled(true);
-            Task<Location> userLocationTask = mFusedLocationClient.getLastLocation();
-            Location userLocation = userLocationTask.getResult();
-            Circle circle = mMap.addCircle(new CircleOptions()
-                    .center(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()))
-                    .radius(1000)
-                    .strokeColor(Color.RED)
-                    .fillColor(0x00000000));
         }
+
+        /* Draw the arena boundaries */
+        LatLng gameCenter = new LatLng(43.7, -72.3);
+        final Circle circle = mMap.addCircle(new CircleOptions()
+                .center(gameCenter)
+                .radius(1000)
+                .strokeColor(Color.RED)
+                .fillColor(0x00000000));
+
+        CountDownTimer Timer = new CountDownTimer(gameTime, circleDecreaseInterval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                circle.setRadius(circle.getRadius()*0.6);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+
+        Timer.start();
+
 
 //        // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(43.7, -72.3);

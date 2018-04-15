@@ -18,9 +18,10 @@ db = firebase.database()
 #initiaize flask
 app = Flask(__name__)
 
+# a route where we will display a welcome message via an HTML template
 @app.route("/")
 def hello():
-	return "Hello World"
+	return render_template('index.html', file=data)
 
 @app.route("/bye")
 def bye():
