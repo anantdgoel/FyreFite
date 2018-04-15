@@ -28,17 +28,22 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
     <script>
-
+    console.log("BEFORE")
     var settings = {
       "async": true,
+      "json": "callback",
+      "dataType": "json",
       "crossDomain": true,
-      "url": "http://www.fyrefite.com/api/getgames",
+      "url": "http://fyrefite.com/api/getgames/",
       "method": "GET",
       "headers": {
         "Content-Type": "application/json",
-        "Cache-Control": "no-cache"
+        // "Cache-Control": "no-cache"
       }
     }
+    console.log("AFTER")
+
+
     var circles = [];
     var map;
     var image = 'https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png';
@@ -51,7 +56,7 @@
         mapTypeId: 'terrain'
       });
     }
-
+    console.log("FOR LOOP")
     function clearOverlays() {
         for (var i = 0; i < circles.length; i++ ) {
           circles[i].setMap(null);
@@ -63,7 +68,12 @@
         clearOverlays();
 
         $.ajax(settings).done(function (response) {
+          // console.log(response[0].lat);
           for(var key in response){
+            console.log("AA")
+            console.log(response.get(key));
+            console.log("BBBB")
+
             // Add the circle for this city to the map.
             var cityCircle = new google.maps.Circle({
               strokeColor: '#FF0000',
