@@ -58,26 +58,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //check
-        checkVictoryAndDeath();
 
-        if(justStart){
-            healthPoints = 100;
-            ammo = 30;
-            secondsLeft = 120;
-            nPlayers = 20;
-            nFirstAids = 1;
-            nBandages = 1;
-            justStart = false;
-        }
-
-        firstAid = findViewById(R.id.first_aid);
-        bandage = findViewById(R.id.bandage);
-        fire = findViewById(R.id.fire);
-        weapon = findViewById(R.id.weapon);
-        countdown = findViewById(R.id.countdown);
-        playerCount = findViewById(R.id.player_count);
-        health = findViewById(R.id.health);
+//        if(justStart){
+//            healthPoints = 100;
+//            ammo = 30;
+//            secondsLeft = 120;
+//            nPlayers = 20;
+//            nFirstAids = 1;
+//            nBandages = 1;
+//            justStart = false;
+//        }
+//
+//        //check
+//        checkVictoryAndDeath();
+//
+//        firstAid = findViewById(R.id.first_aid);
+//        bandage = findViewById(R.id.bandage);
+//        fire = findViewById(R.id.fire);
+//        weapon = findViewById(R.id.weapon);
+//        countdown = findViewById(R.id.countdown);
+//        playerCount = findViewById(R.id.player_count);
+//        health = findViewById(R.id.health);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
