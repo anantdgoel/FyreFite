@@ -98,4 +98,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="more_menu">More Menu</string>
     <string name="game_name">Game Name</string>
+
+    <string name="facebook_application_id" translatable="false">353305938511712</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb353305938511712</string>
 </resources>
