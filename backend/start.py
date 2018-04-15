@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, render_template
 import pyrebase
 
 from game import Game
@@ -21,7 +21,7 @@ app = Flask(__name__)
 # a route where we will display a welcome message via an HTML template
 @app.route("/")
 def hello():
-	return render_template('index.html', file=data)
+	return render_template('index.html', message="hello")
 
 @app.route("/bye")
 def bye():
