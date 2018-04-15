@@ -25,87 +25,83 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
     <script>
-      var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "http://127.0.0.1:5000/api/getgames",
-        "method": "GET",
-        "headers": {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache"
-        }
+
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://127.0.0.1:5000/api/getgames",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
       }
+    }
+    var circles = [];
+    var map;
+    var image = 'https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png';
 
+    function initMap() {
+      // Create the map.
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: {lat: 37.090, lng: -95.712},
+        mapTypeId: 'terrain'
+      });
+    }
 
-      var circles = [];
-      var map;
-
-      function initMap() {
-        // Create the map.
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: {lat: 37.090, lng: -95.712},
-          mapTypeId: 'terrain'
-        });
-        // Construct the circle for each value in citymap.
-        // Note: We scale the area of the circle based on the population.
-      }
-      var file = JSON.parse('{{ file | tojson | safe}}');
-
-
-      function clearOverlays() {
-          console.log('inside');
-          for (var i = 0; i < circles.length; i++ ) {
-            circles[i].setMap(null);
-          }
-          circles.length = 0;
+    function clearOverlays() {
+        for (var i = 0; i < circles.length; i++ ) {
+          circles[i].setMap(null);
         }
-
+        circles.length = 0;
+      }
 
       setInterval(() => {
         clearOverlays();
 
         $.ajax(settings).done(function (response) {
           console.log(response);
+          for(var key in response){
+            // Add the circle for this city to the map.
+            var cityCircle = new google.maps.Circle({
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              map: map,
+              center: {lat: response[key].lat, lng: response[key].long},
+              radius: response[key].r
+            });
+            circles.push(cityCircle);
+
+            //add markers
+            var marker = new google.maps.Marker({
+              position: {lat: response[key].lat, lng: response[key].long},
+              map: map,
+              title: 'Hello World!'
+            });
+            circles.push(marker);
+
+            //add players
+            var players = response[key].players;
+            if (players != 0){
+              for (var i = 1; i < players.length; i++ ){
+                var marker = new google.maps.Marker({
+                  position: {lat: players[i].lat, lng: players[i].long},
+                  map: map,
+                  icon: image
+                });
+                circles.push(marker);
+              }
+            }
+          }
         });
-
-
-        for (i = 0; i < (file.game).length; i++){
-
-          // if (typeof circles != 'undefined'){
-          //
-          //   for (var circle in circles){
-          //     // circle.setMap(null);
-          //   }
-          // }
-          console.log('oute')
-          // Add the circle for this city to the map.
-          var cityCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: {lat: file.game[i].lat, lng: file.game[i].long},
-            radius: file.game[i].radius
-          });
-
-          circles.push(cityCircle);
-
-          var marker = new google.maps.Marker({
-            position: {lat: file.game[i].lat, lng: file.game[i].long},
-            map: map,
-            title: 'Hello World!'
-          });
-
-          circles.push(marker);
-        }
       }, 1000);
 
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbLltw_ihJC3Kl2Udk8Z36_4KHEveFD7Y&callback=initMap">
-    </script>
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ19AGRXBu3qi6d_H4EbxMIBCqmRCa4Qs&callback=initMap">
+</script>
   </body>
 </html>
