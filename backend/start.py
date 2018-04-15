@@ -21,9 +21,9 @@ app = Flask(__name__)
 CORS(app)
 
 # a route where we will display a welcome message via an HTML template
-@app.route("/")
-def hello():
-	return render_template('index.html', message="hello")
+# @app.route("/")
+# def hello():
+# 	return render_template('index.html', message="hello")
 
 @app.route("/bye")
 def bye():
@@ -39,7 +39,7 @@ def create_game():
 
 # @app.route("/api/games/<gameid>/add")
 # def drop_player(gameid):
-# 	game = games[gameid] 
+# 	game = games[gameid]
 
 @app.route("/api/getgames/", methods=['GET'])
 def get_games():
@@ -54,7 +54,7 @@ def get_game(gameid):
 @app.route("/api/games/<gameid>/players", methods=['GET'])
 def players(gameid):
 	players = db.child("games/"+gameid).child("players").get()
-	return jsonify(players.val()) 
+	return jsonify(players.val())
 
 @app.route("/api/<gameid>/join/<pid>", methods=['POST'])
 def add_to_game(gameid, pid):
