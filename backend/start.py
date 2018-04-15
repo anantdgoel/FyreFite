@@ -38,7 +38,7 @@ def create_game():
 
 # @app.route("/api/games/<gameid>/add")
 # def drop_player(gameid):
-# 	game = games[gameid]
+# 	game = games[gameid] 
 
 @app.route("/api/getgames", methods=['GET'])
 def get_games():
@@ -47,3 +47,8 @@ def get_games():
 	for game in games.each():
 		data[game.key()] = {'lat':game.val()['lat'], 'long':game.val()['long'], 'r':game.val()['r'], 'players':game.val()['players']}
 	return jsonify(data)
+
+@app.route("/api/games/<gameid>", methods=['GET'])
+def get_game(gameid):
+	game_by_id = db.child("games/"+gameid).get()
+	return jsonify(game_by_id.val())
